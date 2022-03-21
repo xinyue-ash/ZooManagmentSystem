@@ -25,7 +25,7 @@
         <h2>Reset</h2>
         <p>If you wish to reset the table press on the reset button. If this is the first time you're running this page, you MUST use reset</p>
 
-        <form method="POST" action="oracle-test.php">
+        <form method="POST" action="zooMng.php">
             <!-- if you want another page to load after the button is clicked, you have to specify that page in the action parameter -->
             <input type="hidden" id="resetTablesRequest" name="resetTablesRequest">
             <p><input type="submit" value="Reset" name="reset"></p>
@@ -41,12 +41,11 @@
 
 
         <h3>Insert/Delete Zone Shortage</h3>
-        <form method="POST" action="oracle-test.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
-            zoneName: <input type="text" name="insNo"> <br /><br />
-            supplyShotage: <input type="text" name="insName"> <br /><br />
-            
-
+        <form method="POST" action="zooMng.php"> <!--refresh page when submitted-->
+            <input type="hidden" id="insertZoneShortage" name="insertZoneShortage">
+            zoneName: <input type="text" name="insZoneName"> <br /><br />
+            supplyShotage: <input type="text" name="insSupplyShortage"> <br /><br />
+        
             <input type="submit" value="Insert" name="insertSubmit">
             <input type="submit" value="Delete" name="">
         </form>
@@ -84,7 +83,7 @@
 
         <h3>Update needVet</h3>
         <h3>Enter animalID</h3>
-         <form method="POST" action="oracle-test.php"> <!--refresh page when submitted-->
+         <form method="POST" action="zooMng.php"> <!--refresh page when submitted-->
             <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
             Old Name: <input type="text" name="oldName"> <br /><br />
             New Name: <input type="text" name="newName"> <br /><br />
@@ -166,7 +165,7 @@
         <!-- orginal demo -->
         <h1>original demo</h1>
         <h2>Insert Values into DemoTable</h2>
-        <form method="POST" action="oracle-test.php"> <!--refresh page when submitted-->
+        <form method="POST" action="zooMng.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
             Number: <input type="text" name="insNo"> <br /><br />
             Name: <input type="text" name="insName"> <br /><br />
@@ -179,7 +178,7 @@
         <h2>Update Name in DemoTable</h2>
         <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
 
-        <form method="POST" action="oracle-test.php"> <!--refresh page when submitted-->
+        <form method="POST" action="zooMng.php"> <!--refresh page when submitted-->
             <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
             Old Name: <input type="text" name="oldName"> <br /><br />
             New Name: <input type="text" name="newName"> <br /><br />
@@ -189,7 +188,7 @@
 
 
         <h2>Count the Tuples in DemoTable</h2>
-        <form method="GET" action="oracle-test.php"> <!--refresh page when submitted-->
+        <form method="GET" action="zooMng.php"> <!--refresh page when submitted-->
             <input type="hidden" id="countTupleRequest" name="countTupleRequest">
             <input type="submit" name="countTuples"></p>
         </form>
@@ -252,8 +251,8 @@
 
             foreach ($list as $tuple) {
                 foreach ($tuple as $bind => $val) {
-                    //echo $val;
-                    //echo "<br>".$bind."<br>";
+                    echo $val;
+                    echo "<br>".$bind."<br>";
                     OCIBindByName($statement, $bind, $val);
                     unset ($val); //make sure you do not remove this. Otherwise $val will remain in an array object wrapper which will not be recognized by Oracle as a proper datatype
 				}
@@ -320,14 +319,70 @@
         function handleResetRequest() {
             global $db_conn;
             // Drop old table
+            // AC:need to modify 
             executePlainSQL("DROP TABLE demoTable");
 
             // Create new table
             echo "<br> creating new table <br>";
             executePlainSQL("CREATE TABLE demoTable (id int PRIMARY KEY, name char(30))");
+            //executePlainSQL("CREATE TABLE demoTable (id int PRIMARY KEY, name char(30))");
+            executePlainSQL("CREATE TABLE Zones
+	                        (zoneName VARCHAR(20),
+	                        numAnimals INTEGER,
+	                        PRIMARY KEY (zoneName));");
+
+            executePlainSQL("CREATE TABLE Zone_Shortage 
+	                        (zoneName VARCHAR(20),
+	                        supplyShortage VARCHAR(20),
+	                        PRIMARY KEY (zoneName, supplyShortage),
+	                        FOREIGN KEY (zoneName) references Zones ON DELETE CASCADE);");
+
+            executePlainSQL("CREATE TABLE Animal_BasicInfo 
+	                        (animalID INTEGER,
+	                        gender VARCHAR(10),
+	                        needVet INTEGER,
+	                        since DATE,
+	                        zoneName VARCHAR(20),
+	                        species VARCHAR(20),
+	                        PRIMARY KEY (animalID),
+	                        FOREIGN KEY (zoneName) references Zones);");
+
+            executePlainSQL("CREATE TABLE Animal_Carers
+	                        (carerID INTEGER,
+	                        cname VARCHAR(20),
+	                        workingLocation VARCHAR(20),
+	                        toolSetID INTEGER,
+	                        expertise VARCHAR(20),
+	                        feedingSchedule VARCHAR(20),
+	                        CHECK ((feedingSchedule IS NOT NULL) 
+		                    OR (toolSetID IS NOT NULL) 
+		                    OR (expertise  IS NOT NULL)),
+	                        PRIMARY KEY (carerID));");
             OCICommit($db_conn);
         }
 
+        function insertZoneShortage(){
+            global $db_conn;
+
+            //Getting the values from user and insert data into the table
+            $tuple = array (
+                ":bind1" => $_POST['insZoneName'],
+                ":bind2" => $_POST['insSupplyShortage']
+            );
+
+            // https://www.w3schools.com/php/php_arrays_associative.asp
+
+            $alltuples = array (
+                $tuple
+            );
+
+            $result = executeBoundSQL("insert into Zone_Shorage values (:bind1, :bind2)", $alltuples);
+            
+            OCICommit($db_conn);
+        }
+
+
+        // original
         function handleInsertRequest() {
             global $db_conn;
 
@@ -343,7 +398,8 @@
                 $tuple
             );
 
-            executeBoundSQL("insert into demoTable values (:bind1, :bind2)", $alltuples);
+            $result = executeBoundSQL("insert into demoTable values (:bind1, :bind2)", $alltuples);
+            
             OCICommit($db_conn);
         }
 
@@ -367,6 +423,8 @@
                     handleUpdateRequest();
                 } else if (array_key_exists('insertQueryRequest', $_POST)) {
                     handleInsertRequest();
+                }else if (array_key_exists('insertZoneShortage', $_POST)){ // ac: I added this for now 
+                    insertZoneShortage();
                 }
 
                 disconnectFromDB();
