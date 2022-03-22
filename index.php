@@ -176,23 +176,6 @@ function handleResetRequest() {
                     handleInsertRequest();
                 }else if (array_key_exists('insertZoneShortage', $_POST)){ // ac: I added this for now 
                     insertZoneShortage();
-                }
-
-                disconnectFromDB();
-            }
-        }
-// HANDLE ALL POST ROUTES
-	// A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
-        function handlePOSTRequest() {
-            if (connectToDB()) {
-                if (array_key_exists('resetTablesRequest', $_POST)) {
-                    handleResetRequest();
-                } else if (array_key_exists('updateQueryRequest', $_POST)) {
-                    handleUpdateRequest();
-                } else if (array_key_exists('insertQueryRequest', $_POST)) {
-                    handleInsertRequest();
-                }else if (array_key_exists('insertZoneShortage', $_POST)){ // ac: I added this for now 
-                    insertZoneShortage();
                 }else if (array_key_exists('updateVet', $_POST)){ // ac: I added this for now 
                     updateVet();
                 }
@@ -207,7 +190,13 @@ function handleResetRequest() {
             if (connectToDB()) {
                 if (array_key_exists('countTuples', $_GET)) {
                     handleCountRequest();
-                }
+                } else if (array_key_exists('findRspnAnimal', $_GET)){
+                    findRspnAnimal();
+
+                } else if (array_key_exists('findGenderForSpc', $_GET)){
+                    findGenderForSpc();
+
+            }
 
                 disconnectFromDB();
             }
@@ -215,16 +204,10 @@ function handleResetRequest() {
 
 		if (isset($_POST['reset']) || isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
             handlePOSTRequest();
-        } else if (isset($_GET['findRspnAnimal'])){
-            findRspnAnimal();
-
-        } else if (isset($_GET['findGenderForSpc'])){
-            findGenderForSpc();
-
         }
-        else if (isset($_GET['countTupleRequest'])) {
+        else if (isset($_GET['countTupleRequest']) || isset($_GET['selectSubmit'])) {
             handleGETRequest();
         }
-	?>
+?>
 
         
