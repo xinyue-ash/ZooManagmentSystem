@@ -33,11 +33,9 @@
 
         <hr />
 
-        <!-- animal carers -->
+        
+       <!-- animal carers -->
         <h1>Animal Carers</h1>
-
-
-    
 
 
         <h3>Insert/Delete Zone Shortage</h3>
@@ -51,29 +49,29 @@
         </form>
 
         <h3>Update needVet</h3>
-        <form method="" action=""></form>
-        <input type="hidden" id="" name="">
-            animalD: <input type="text" name=""> <br /><br />
-            needVet: <input type="text" name=""> <br /><br />
+        <form method="POST" action="zooMng.php"></form>
+        <input type="hidden" id="updateVet" name="updateVet">
+            animalD: <input type="text" name="animalID"> <br /><br />
+            needVet: <input type="text" name="needVet"> <br /><br />
             <input type="submit" value="Update" name="updateSubmit"></p>
 
         <h3>Responsible Animal</h3>
         <!-- (SELECT animal that i am responsible for) -->
-        <form method action="">
-            <input type="hidden" id="" name="">
-            carerID: <input type="text" name=""> <br /><br />
+        <form method="GET" action="zooMng.php">
+            <input type="hidden" id="findRspnAnimal" name="findRspnAnimal">
+            carerID: <input type="text" name="carerID"> <br /><br />
 
-            <input type="submit" value="Select" name=""></p>
+            <input type="submit" value="Select" name="selectSubmit"></p>
         </form>
 
         <h3>For Breader: by gender</h3>
         <!-- (GROUP BY same species that he/she are take care of , how many female/ male) -->
         <!-- refer to cout demo and handleCountRequest  -->
-        <form method action="">
-            <input type="hidden" id="" name="">
-            species: <input type="text" name=""> <br /><br />
+        <form method action="GET">
+            <input type="hidden" id="findGenderForSpc" name="findGenderForSpc">
+            species: <input type="text" name="species"> <br /><br />
 
-            <input type="submit" value="Count" name=""></p>
+            <input type="submit" value="Select" name="selectSubmit"></p>
         </form>
 
         <hr />
