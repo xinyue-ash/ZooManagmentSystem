@@ -14,7 +14,6 @@ drop table Supply_Managers;
 drop table Company;
 drop table Animal_Hospitals;
 
-
 CREATE TABLE Animal_Carers
 	(carerID INTEGER,
 	cname VARCHAR(20),
@@ -116,7 +115,7 @@ grant select on Location_Method to public;
 
 
 CREATE TABLE Contact_Info 
-	(email CHAR(20), 
+	(email VARCHAR(40), 
 	phoneNum INTEGER,
 	PRIMARY KEY (email));
 
@@ -424,3 +423,6 @@ values('reptile_zone', 305, 401, 'Ben');
 
 insert into Vets_Occupation
 values('mamal_zone', 306, 405, 'Ashley');
+
+
+--grant all privileges on zoo.* to public;
