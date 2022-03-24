@@ -23,10 +23,10 @@ function updateVet() {
     global $db_conn;
 
     $aniaml_ID = $_POST['animalID'];
-    $needVet = $_POST['needVet'];
+    $need_vet = true;
 
     // you need the wrap the old name and new name values with single quotations
-    executePlainSQL("UPDATE demoTable SET needVet='" . $needVet . "' WHERE aniaml_ID='" . $aniaml_ID . "'");
+    executePlainSQL("UPDATE demoTable SET needVet='" . $need_vet . "' WHERE aniaml_ID='" . $aniaml_ID . "'");
     OCICommit($db_conn);
 }
 

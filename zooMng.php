@@ -39,6 +39,7 @@
 
 
         <h3>Insert/Delete Zone Shortage</h3>
+        <i><h4>Enter the name of the zone and type of supply to edit the status of zone shortage below</h4></i>
         <form method="POST" action="zooMng.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertZoneShortage" name="insertZoneShortage">
             zoneName: <input type="text" name="insZoneName"> <br /><br />
@@ -49,13 +50,14 @@
         </form>
 
         <h3>Update needVet</h3>
+        <h2>Enter the ID of the animal that needs medical care from vets below</h2>
         <form method="POST" action="zooMng.php"></form>
         <input type="hidden" id="updateVet" name="updateVet">
             animalD: <input type="text" name="animalID"> <br /><br />
-            needVet: <input type="text" name="needVet"> <br /><br />
             <input type="submit" value="Update" name="updateSubmit"></p>
 
         <h3>Responsible Animal</h3>
+        <i><h4>Enter your worker ID below to get a list of animals you are responsible of</h4></i>
         <!-- (SELECT animal that i am responsible for) -->
         <form method="GET" action="zooMng.php">
             <input type="hidden" id="findRspnAnimal" name="findRspnAnimal">
@@ -65,6 +67,7 @@
         </form>
 
         <h3>For Breader: by gender</h3>
+        <i><h4>Enter an animal species below to get the number of male/female individuals of that species</h4></i>
         <!-- (GROUP BY same species that he/she are take care of , how many female/ male) -->
         <!-- refer to cout demo and handleCountRequest  -->
         <form method action="GET">
@@ -80,17 +83,15 @@
         <h1>Medical Care</h1>
 
         <h3>Update needVet</h3>
-        <h3>Enter animalID</h3>
-         <form method="POST" action="zooMng.php"> <!--refresh page when submitted-->
-            <input type="hidden" id="updateQueryRequest" name="updateQueryRequest">
-            Old Name: <input type="text" name="oldName"> <br /><br />
-            New Name: <input type="text" name="newName"> <br /><br />
-
+        <i><h4>Enter the ID of the animal that no longer needs medical care from vets below</h4></i>
+        <form method="POST" action="zooMng.php">
+        <input type="hidden" id="updateVet" name="updateVet">
+            animalD: <input type="text" name="animalID"> <br /><br />
             <input type="submit" value="Update" name="updateSubmit"></p>
         </form>
 
-
-        <h3>Enter Zone name</h3>
+        <h3>Find needVet animals in zone</h3>
+        <i><h4>Enter the name of the zone below and get a list of animals that need medical care in that zone</h4></i>
         <form method="POST" action="oracle-test.php"> <!--refresh page when submitted-->
             <input type="hidden" id="insertQueryRequest" name="insertQueryRequest">
             zoneName: <input type="text" name="insNo"> <br /><br />
