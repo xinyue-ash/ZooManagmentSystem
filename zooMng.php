@@ -1,3 +1,4 @@
+<!-- The html file of Zoon Managment System UI -->
 <!-- This file is modified from file by Group 24 from Milestone3 2022 Spring:
 https://github.students.cs.ubc.ca/CPSC304/CPSC304_PHP_Project/blob/master/init.php -->
 <!--Test Oracle file for UBC CPSC304 2018 Winter Term 1
@@ -79,6 +80,35 @@ https://github.students.cs.ubc.ca/CPSC304/CPSC304_PHP_Project/blob/master/init.p
         <input type="hidden" id="prjctAnimal" name="prjctAnimal">
         <input type="submit" value="Project Info" name="prjctSubmit"></p>
     </form>
+
+    <hr />
+    <!-- Vet -->
+    <h1>Medical Care</h1>
+
+    <h3>Update needVet</h3>
+    <i>
+        <h4>Enter the ID of the animal that no longer needs medical care from vets below</h4>
+    </i>
+    <form method="POST" action="zooMng.php">
+        <input type="hidden" id="updateVetFromVet" name="updateVetFromVet">
+        animalD: <input type="text" name="animalIDFromVet"> <br /><br />
+        <input type="submit" value="Update needVet" name="updateSubmit"></p>
+    </form>
+
+    <h3>Find animals who need to see vet</h3>
+    <i>
+        <h4>Enter your Vet ID below and get a list of animals that need medical care under you responsibility</h4>
+    </i>
+    <form method="GET" action="zooMng.php">
+        <!--refresh page when submitted-->
+        <input type="hidden" id="findANeedVet" name="findANeedVet">
+        vetID: <input type="text" name="vetID"> <br /><br />
+
+        <input type="submit" value="See which cutie need to see me" name="selectSubmit"></p>
+    </form>
+
+
+
 
     <?php
     include("index.php");
