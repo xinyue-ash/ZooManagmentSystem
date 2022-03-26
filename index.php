@@ -1,4 +1,7 @@
+<!-- This file is modified from file by Group 24 from Milestone3 2022 Spring:
+https://github.students.cs.ubc.ca/CPSC304/CPSC304_PHP_Project/blob/master/init.php -->
 <?php
+
 //this tells the system that it's no longer just parsing html; it's now parsing PHP
 
 $success = True; //keep track of errors so it redirects the page only if there are no errors
@@ -76,19 +79,6 @@ function executeBoundSQL($cmdstr, $list)
     }
 }
 
-function printResult($result)
-{ //prints results from a select statement
-    echo "<br>Retrieved data from table demoTable:<br>";
-    echo "<table>";
-    echo "<tr><th>ID</th><th>Name</th></tr>";
-
-    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "<tr><td>" . $row["ID"] . "</td><td>" . $row["NAME"] . "</td></tr>"; //or just use "echo $row[0]" 
-    }
-
-    echo "</table>";
-}
-
 function connectToDB()
 {
     global $db_conn;
@@ -116,9 +106,8 @@ function disconnectFromDB()
     OCILogoff($db_conn);
 }
 
-//include("animal_carer.php");
 
-
+// Insertion
 function insertZoneShortage()
 {
     global $db_conn;
@@ -129,7 +118,6 @@ function insertZoneShortage()
         ":bind2" => $_POST['insSupplyShortage']
     );
 
-    // https://www.w3schools.com/php/php_arrays_associative.asp
 
     $alltuples = array(
         $tuple
@@ -141,6 +129,7 @@ function insertZoneShortage()
     OCICommit($db_conn);
 }
 
+// Update
 function updateVet()
 {
     global $db_conn;
@@ -152,21 +141,20 @@ function updateVet()
     OCICommit($db_conn);
 }
 
+// Selection
 function findRspnAnimal()
 {
     global $db_conn;
 
     $carerID = (int)$_GET['carerID'];
 
-    // you need the wrap the old name and new name values with single quotations
     $result = executePlainSQL("SELECT animalID FROM Take_Care_Of  WHERE carerID='" . $carerID . "'");
 
     echo "<br>The animal that you are taking care of:<br>";
     echo "<table>";
     echo "<tr><th>ANIMALID</th></tr>";
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
-        echo "<tr><td>" . $row["ANIMALID"] . "</td><td>"; //or just use "echo $row[0]"
-        //echo $row[0];
+        echo "<tr><td>" . $row["ANIMALID"] . "</td><td>";
     }
     echo "</table>";
 
@@ -174,6 +162,7 @@ function findRspnAnimal()
     OCICommit($db_conn);
 }
 
+// Aggrt
 function countNumSpc()
 {
     global $db_conn;
@@ -188,6 +177,8 @@ function countNumSpc()
     OCICommit($db_conn);
 }
 
+
+//Projection
 function prjctAnimal()
 {
     global $db_conn;
@@ -204,18 +195,50 @@ function prjctAnimal()
     OCICommit($db_conn);
 }
 
+function updateVetFromVet()
+{
+    global $db_conn;
+
+    $aniaml_ID = (int)$_POST['animalIDFromVet'];
+
+    executePlainSQL("UPDATE Animal_BasicInfo SET needVet=0 WHERE animalID='" . $aniaml_ID . "'");
+
+    OCICommit($db_conn);
+}
+
+// join
+function findANeedVet()
+{
+    global $db_conn;
+
+    $vet_ID = (int)$_GET['vetID'];
+    //select animalID from Animal_BasicInfo A, Vets_Occupation V where A.zoneName = V.zoneName and needVet = 1 and vetID = vid(int);
+
+    $result = executePlainSQL("SELECT animalID FROM Animal_BasicInfo A, Vets_Occupation V  WHERE A.zoneName = V.zoneName and needVet = 1 and vetID='" . $vet_ID . "'");
+
+    echo "<br>The animal that you are taking care of:<br>";
+    echo "<table>";
+    echo "<tr><th>ANIMALID</th></tr>";
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "<tr><td>" . $row["ANIMALID"] . "</td><td>";
+    }
+    echo "</table>";
+
+    OCICommit($db_conn);
+}
+
 
 // HANDLE ALL POST ROUTES
 // A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
 function handlePOSTRequest()
 {
     if (connectToDB()) {
-        if (array_key_exists('resetTablesRequest', $_POST)) {
-            handleResetRequest();
-        } else if (array_key_exists('insertZoneShortage', $_POST)) { // ac: I added this for now 
+        if (array_key_exists('insertZoneShortage', $_POST)) {
             insertZoneShortage();
-        } else if (array_key_exists('updateVet', $_POST)) { // ac: I added this for now 
+        } else if (array_key_exists('updateVet', $_POST)) {
             updateVet();
+        } else if (array_key_exists('updateVetFromVet', $_POST)) {
+            updateVetFromVet();
         }
 
         disconnectFromDB();
@@ -231,10 +254,10 @@ function handleGETRequest()
             countNumSpc();
         } else if (array_key_exists('findRspnAnimal', $_GET)) {
             findRspnAnimal();
-        } else if (array_key_exists('findGenderForSpc', $_GET)) {
-            findGenderForSpc();
         } else if (array_key_exists('prjctAnimal', $_GET)) {
             prjctAnimal();
+        } else if (array_key_exists('findANeedVet', $_GET)) {
+            findANeedVet();
         }
 
         disconnectFromDB();
