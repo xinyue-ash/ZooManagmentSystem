@@ -227,6 +227,18 @@ function findANeedVet()
     OCICommit($db_conn);
 }
 
+function deletco()
+{
+
+    global $db_conn;
+
+    $co_name = $_POST['coname'];
+
+    // you need the wrap the old name and new name values with single quotations
+    executePlainSQL("DELETE FROM Company WHERE companyName='" . $co_name . "'");
+    OCICommit($db_conn);
+}
+
 
 // HANDLE ALL POST ROUTES
 // A better coding practice is to have one method that reroutes your requests accordingly. It will make it easier to add/remove functionality.
@@ -239,6 +251,8 @@ function handlePOSTRequest()
             updateVet();
         } else if (array_key_exists('updateVetFromVet', $_POST)) {
             updateVetFromVet();
+        } else if (array_key_exists('deleteSubmit', $_POST)) {
+            deletco();
         }
 
         disconnectFromDB();
@@ -264,7 +278,7 @@ function handleGETRequest()
     }
 }
 
-if (isset($_POST['updateSubmit']) || isset($_POST['insertSubmit'])) {
+if (isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_POST['deleteSubmit'])) {
     handlePOSTRequest();
 } else if (isset($_GET['countNumSpc']) || isset($_GET['selectSubmit']) || isset($_GET['prjctSubmit'])) {
     handleGETRequest();

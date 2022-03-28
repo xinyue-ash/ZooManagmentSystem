@@ -82,6 +82,8 @@ https://github.students.cs.ubc.ca/CPSC304/CPSC304_PHP_Project/blob/master/init.p
     </form>
 
     <hr />
+
+
     <!-- Vet -->
     <h1>Medical Care</h1>
 
@@ -107,13 +109,27 @@ https://github.students.cs.ubc.ca/CPSC304/CPSC304_PHP_Project/blob/master/init.p
         <input type="submit" value="See which cutie need to see me" name="selectSubmit"></p>
     </form>
 
+    <hr />
+    <!-- manager -->
+    <h1>Supply Managment</h1>
 
+    <h3>Delete a company</h3>
+    <form method="POST" action="zooMng.php">
+        <!--refresh page when submitted-->
+        <input type="hidden" id="deletco" name="deletco">
 
+        companyName: <input type="text" name="coname"> <br /><br />
 
+        <input type="submit" value="Delete Company" name="deleteSubmit">
+        <!-- DELETION (on CASCADE) : delete a company, then the information in Provide_Supplies also deleted  -->
+
+    </form>
+
+    <!-- start of php functions -->
     <?php
     include("index.php");
-
     ?>
+
 </body>
 
 </html>
