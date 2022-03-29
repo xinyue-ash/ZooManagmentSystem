@@ -18,7 +18,7 @@ https://github.students.cs.ubc.ca/CPSC304/CPSC304_PHP_Project/blob/master/init.p
   extension.  You must also change the username and password on the 
   OCILogon below to be your ORACLE username and password -->
 
-<html>
+  <html>
 
 <head>
     <title>Zoo Management</title>
@@ -66,7 +66,7 @@ https://github.students.cs.ubc.ca/CPSC304/CPSC304_PHP_Project/blob/master/init.p
     </form>
 
 
-    <h3>count number of a input species</h3>
+    <h3>Count number of a input species</h3>
     <form method="GET" action="zooMng.php">
         <input type="hidden" id="countNumSpc" name="countNumSpc">
         species: <input type="text" name="species"> <br /><br />
