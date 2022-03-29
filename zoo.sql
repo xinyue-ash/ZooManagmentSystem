@@ -62,7 +62,8 @@ CREATE TABLE Zone_Shortage
 	(zoneName VARCHAR(20),
 	supplyShortage VARCHAR(20),
 	PRIMARY KEY (zoneName, supplyShortage),
-	FOREIGN KEY (zoneName) references Zones ON DELETE CASCADE);
+	FOREIGN KEY (zoneName) references Zones ON DELETE CASCADE
+	);
 
 grant all privileges on Zone_Shortage to public;
  
@@ -139,7 +140,7 @@ CREATE TABLE Contact
 	PRIMARY KEY (managerID, companyName),
 	UNIQUE (orderNum),
 	FOREIGN KEY (managerID) references Supply_Managers,
-	FOREIGN KEY (companyName) references Company);
+	FOREIGN KEY (companyName) references Company ON DELETE CASCADE);
  
 grant all privileges on Contact to public;
 
@@ -210,6 +211,7 @@ values(112, 'male', 1, to_date('2021-01-18', 'yyyy-mm-dd'), 'amphibian_zone', 'G
 
 insert into Animal_BasicInfo
 values(113, 'female', 0, to_date('2014-10-16', 'yyyy-mm-dd'), 'mamal_zone', 'Panda');
+
 
 insert into Animal_BasicInfo
 values(114, 'male', 1, to_date('2014-10-16', 'yyyy-mm-dd'), 'reptile_zone', 'Black Rat Snake');

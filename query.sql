@@ -37,4 +37,3 @@ where not exists
     (select supplyShortage from Zone_Shortage where supplyShortage <> ' '
     minus
     select category from Provide_Supplies P where P.companyName = C.companyName);
- 
