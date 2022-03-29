@@ -85,7 +85,7 @@ function connectToDB()
 
     // Your username is ora_(CWL_ID) and the password is a(student number). For example, 
     // ora_platypus is the username and a12345678 is the password.
-    $db_conn = OCILogon("ora_ashleyue", "a86285756", "dbhost.students.cs.ubc.ca:1522/stu");
+    $db_conn = OCILogon("ora_ut71358", "a92180629", "dbhost.students.cs.ubc.ca:1522/stu");
 
     if ($db_conn) {
         debugAlertMessage("Database is Connected");
@@ -216,7 +216,7 @@ function findANeedVet()
 
     $result = executePlainSQL("SELECT animalID FROM Animal_BasicInfo A, Vets_Occupation V  WHERE A.zoneName = V.zoneName and needVet = 1 and vetID='" . $vet_ID . "'");
 
-    echo "<br>The animal that you are taking care of:<br>";
+    echo "<br>The animals that need your treatment:<br>";
     echo "<table>";
     echo "<tr><th>ANIMALID</th></tr>";
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
