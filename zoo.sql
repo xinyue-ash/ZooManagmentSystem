@@ -166,7 +166,7 @@ grant all privileges on Vets_Occupation to public;
  
 
 insert into Animal_Carers
-values(1, 'Ash', 'mamal_zone', 1, null, null);
+values(1, 'Ash', 'mammal_zone', 1, null, null);
 
 insert into Animal_Carers
 values(2, 'Nicole', 'bird_zone', 2, 'swan', null);
@@ -178,14 +178,14 @@ insert into Animal_Carers
 values(4, 'Jocab', 'arctic_zone', 4, null, 'Tue,Wd,Fri');
 
 insert into Animal_Carers
-values(5, 'Noah', 'mamal_zone', null, null, 'Tue');
+values(5, 'Noah', 'mammal_zone', null, null, 'Tue');
 
 insert into Animal_Carers
 values(6, 'Abraham', 'reptile_zone', null, 'snake', null);
 
 
 insert into Zones
-values('mamal_zone', 120);
+values('mammal_zone', 120);
 
 insert into Zones
 values('bird_zone', 50);
@@ -210,7 +210,7 @@ insert into Animal_BasicInfo
 values(112, 'male', 1, to_date('2021-01-18', 'yyyy-mm-dd'), 'amphibian_zone', 'Glass Frog');
 
 insert into Animal_BasicInfo
-values(113, 'female', 0, to_date('2014-10-16', 'yyyy-mm-dd'), 'mamal_zone', 'Panda');
+values(113, 'female', 0, to_date('2014-10-16', 'yyyy-mm-dd'), 'mammal_zone', 'Panda');
 
 insert into Animal_BasicInfo
 values(114, 'male', 1, to_date('2014-10-16', 'yyyy-mm-dd'), 'reptile_zone', 'Black Rat Snake');
@@ -233,7 +233,7 @@ values('Glass Frog', 'crickets, moths, flies');
 
 
 insert into Zone_Shortage
-values('mamal_zone', 'maintenance');
+values('mammal_zone', 'maintenance');
 
 insert into Zone_Shortage
 values('bird_zone', 'medicine');
@@ -271,7 +271,7 @@ values(111, 1, to_date('2022-01-16', 'yyyy-mm-dd'));
 
 
 insert into Supply_Managers 
-values(201, 'mamal_zone');
+values(201, 'mammal_zone');
 
 insert into Supply_Managers 
 values(202, 'bird_zone');
@@ -287,7 +287,7 @@ values(205, 'reptile_zone');
 
 
 insert into Manage
-values('mamal_zone', 201);
+values('mammal_zone', 201);
 
 insert into Manage
 values('bird_zone', 202);
@@ -408,7 +408,7 @@ values(405, 'Central City Animal Hospital');
 
 
 insert into Vets_Occupation
-values('mamal_zone', 301, 401, 'Stephen');
+values('mammal_zone', 301, 401, 'Stephen');
 
 insert into Vets_Occupation
 values('bird_zone', 302, 402, 'Noah');
@@ -423,4 +423,4 @@ insert into Vets_Occupation
 values('reptile_zone', 305, 401, 'Ben');
 
 insert into Vets_Occupation
-values('mamal_zone', 306, 405, 'Ashley');
+values('mammal_zone', 306, 405, 'Ashley');

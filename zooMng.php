@@ -18,7 +18,7 @@ https://github.students.cs.ubc.ca/CPSC304/CPSC304_PHP_Project/blob/master/init.p
   extension.  You must also change the username and password on the 
   OCILogon below to be your ORACLE username and password -->
 
-<html>
+  <html>
 
 <head>
     <title>Zoo Management</title>
@@ -66,7 +66,10 @@ https://github.students.cs.ubc.ca/CPSC304/CPSC304_PHP_Project/blob/master/init.p
     </form>
 
 
-    <h3>count number of a input species</h3>
+    <h3>Count number of a input species</h3>
+    <i>
+        <h4>Enter the name of the specie below to get the total count of that specie</h4>
+    </i>
     <form method="GET" action="zooMng.php">
         <input type="hidden" id="countNumSpc" name="countNumSpc">
         species: <input type="text" name="species"> <br /><br />
@@ -114,6 +117,9 @@ https://github.students.cs.ubc.ca/CPSC304/CPSC304_PHP_Project/blob/master/init.p
     <h1>Supply Managment</h1>
 
     <h3>Delete a company</h3>
+    <i>
+        <h4>Enter the name of the company below to delete the company from the database</h4>
+    </i>
     <form method="POST" action="zooMng.php">
         <!--refresh page when submitted-->
         <input type="hidden" id="deletco" name="deletco">
@@ -125,9 +131,30 @@ https://github.students.cs.ubc.ca/CPSC304/CPSC304_PHP_Project/blob/master/init.p
 
     </form>
 
+    <h3>Search Highest Storage</h3>
+    <i>
+        <h4>Find Company with Highest Storage under Each Supply Category</h4>
+    </i>
+    <form method="GET" action="zooMng.php">
+        <input type="hidden" id="searchCo" name="searchCo">
+        <input type="submit" value="Search Companies" name="selectSubmit"></p>
+    </form>
+
+
+    <h3>Find Company</h3>
+    <i>
+        <h4>With existing zone shortages, find a list of company that can provide all the needed supplies</h4>
+    </i>
+    <form method="GET" action="zooMng.php">
+        <!--refresh page when submitted-->
+        <input type="hidden" id="findCo" name="findCo">
+        <input type="submit" value="Find Company" name="selectSubmit"></p>
+
+    </form>
+    
+
     <hr />
     <h1>Results</h1>
-
 
     <!-- start of php functions -->
     <?php

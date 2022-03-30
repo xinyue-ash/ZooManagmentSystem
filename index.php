@@ -85,7 +85,7 @@ function connectToDB()
 
     // Your username is ora_(CWL_ID) and the password is a(student number). For example, 
     // ora_platypus is the username and a12345678 is the password.
-    $db_conn = OCILogon("ora_ashleyue", "a86285756", "dbhost.students.cs.ubc.ca:1522/stu");
+    $db_conn = OCILogon("ora_nicolexy", "a22322374", "dbhost.students.cs.ubc.ca:1522/stu");
 
     if ($db_conn) {
         debugAlertMessage("Database is Connected");
@@ -216,7 +216,7 @@ function findANeedVet()
 
     $result = executePlainSQL("SELECT animalID FROM Animal_BasicInfo A, Vets_Occupation V  WHERE A.zoneName = V.zoneName and needVet = 1 and vetID='" . $vet_ID . "'");
 
-    echo "<br>The animal that you are taking care of:<br>";
+    echo "<br>The animals that need your treatment:<br>";
     echo "<table>";
     echo "<tr><th>ANIMALID</th></tr>";
     while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
@@ -236,6 +236,64 @@ function deletco()
 
     // you need the wrap the old name and new name values with single quotations
     executePlainSQL("DELETE FROM Company WHERE companyName='" . $co_name . "'");
+    OCICommit($db_conn);
+}
+
+
+// nested aggregation
+function searchCo() 
+{
+
+    global $db_conn;
+
+    $temp = executePlainSQL("CREATE VIEW Temp AS 
+                                (
+                                    SELECT category, max(maxQuantityProvided) AS maxNum
+                                    FROM Provide_Supplies 
+                                    GROUP BY category
+                                )");
+
+    $result = executePlainSQL("SELECT P.companyName, Temp.category, Temp.maxNum FROM Temp, Provide_Supplies P WHERE P.category = Temp.category and P.maxQuantityProvided = Temp.maxNum");
+
+    echo "<br>Companies: <br>";
+    echo "<table>";
+    echo "<tr><th>COMPANYNAME</th><th>CATEGORY</th><th>MAXNUM</th></tr>";
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "<tr><td>" . $row["COMPANYNAME"] . "</td><td>" . $row["CATEGORY"] . "</td><td>" . $row["MAXNUM"] . "</td></tr>";
+    }
+    echo "</table>";
+
+    $delete = executePlainSQL("DROP VIEW Temp");
+
+    OCICommit($db_conn);
+
+}
+
+// Division
+function findCo()
+{
+    global $db_conn;
+
+    $result = executePlainSQL("SELECT C.companyName FROM Company C WHERE NOT EXISTS 
+                                                                    (
+                                                                        SELECT supplyShortage
+                                                                        FROM Zone_Shortage
+                                                                        WHERE supplyShortage <> ''
+                                                                        MINUS
+                                                                        SELECT category
+                                                                        FROM Provide_Supplies P
+                                                                        WHERE P.companyName = C.companyName
+                                                                        
+                                                                    )")
+
+    echo "<br>The company with all the given supplies is:<br>";
+    echo "<table>";
+    echo "<tr><th>COMPANYNAME</th></tr>";
+    while ($row = OCI_Fetch_Array($result, OCI_BOTH)) {
+        echo "<tr><td>" . $row["COMPANYNAME"] . "</td><tr>";
+    }
+    echo "</table>";
+
     OCICommit($db_conn);
 }
 
@@ -272,6 +330,10 @@ function handleGETRequest()
             prjctAnimal();
         } else if (array_key_exists('findANeedVet', $_GET)) {
             findANeedVet();
+        } else if (array_key_exists('findCo', $_GET)) {
+            findCo();
+        } else if (array_key_exists('searchCo', $_GET)) {
+            searchCo();
         }
 
         disconnectFromDB();
