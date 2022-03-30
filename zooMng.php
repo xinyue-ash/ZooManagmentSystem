@@ -125,6 +125,10 @@ https://github.students.cs.ubc.ca/CPSC304/CPSC304_PHP_Project/blob/master/init.p
 
     </form>
 
+    <hr />
+    <h1>Results</h1>
+
+
     <!-- start of php functions -->
     <?php
     include("index.php");

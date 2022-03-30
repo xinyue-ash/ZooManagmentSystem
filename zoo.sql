@@ -212,7 +212,6 @@ values(112, 'male', 1, to_date('2021-01-18', 'yyyy-mm-dd'), 'amphibian_zone', 'G
 insert into Animal_BasicInfo
 values(113, 'female', 0, to_date('2014-10-16', 'yyyy-mm-dd'), 'mamal_zone', 'Panda');
 
-
 insert into Animal_BasicInfo
 values(114, 'male', 1, to_date('2014-10-16', 'yyyy-mm-dd'), 'reptile_zone', 'Black Rat Snake');
 
