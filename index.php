@@ -85,7 +85,7 @@ function connectToDB()
 
     // Your username is ora_(CWL_ID) and the password is a(student number). For example, 
     // ora_platypus is the username and a12345678 is the password.
-    $db_conn = OCILogon("ora_nicolexy", "a22322374", "dbhost.students.cs.ubc.ca:1522/stu");
+    $db_conn = OCILogon("ora_ashleyue", "a86285756", "dbhost.students.cs.ubc.ca:1522/stu");
 
     if ($db_conn) {
         debugAlertMessage("Database is Connected");
@@ -298,7 +298,7 @@ function handlePOSTRequest()
             updateVet();
         } else if (array_key_exists('updateVetFromVet', $_POST)) {
             updateVetFromVet();
-        } else if (array_key_exists('deleteSubmit', $_POST)) {
+        } else if (array_key_exists('deletco', $_POST)) {
             deletco();
         }
 
