@@ -241,7 +241,7 @@ function deletco()
 
 
 // nested aggregation
-function searchCo() 
+function searchCo()
 {
 
     global $db_conn;
@@ -266,7 +266,6 @@ function searchCo()
     $delete = executePlainSQL("DROP VIEW Temp");
 
     OCICommit($db_conn);
-
 }
 
 // Division
@@ -274,17 +273,7 @@ function findCo()
 {
     global $db_conn;
 
-    $result = executePlainSQL("SELECT C.companyName FROM Company C WHERE NOT EXISTS 
-                                                                    (
-                                                                        SELECT supplyShortage
-                                                                        FROM Zone_Shortage
-                                                                        WHERE supplyShortage <> ''
-                                                                        MINUS
-                                                                        SELECT category
-                                                                        FROM Provide_Supplies P
-                                                                        WHERE P.companyName = C.companyName
-                                                                        
-                                                                    )")
+    $result = executePlainSQL("SELECT C.companyName FROM Company C WHERE NOT EXISTS (SELECT supplyShortage FROM Zone_Shortage WHERE supplyShortage <> ' ' MINUS (SELECT category FROM Provide_Supplies P WHERE P.companyName = C.companyName))");
 
     echo "<br>The company with all the given supplies is:<br>";
     echo "<table>";
@@ -345,3 +334,4 @@ if (isset($_POST['updateSubmit']) || isset($_POST['insertSubmit']) || isset($_PO
 } else if (isset($_GET['countNumSpc']) || isset($_GET['selectSubmit']) || isset($_GET['prjctSubmit'])) {
     handleGETRequest();
 }
+?>
