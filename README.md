@@ -1,7 +1,7 @@
 # Zoo Managment System 
 
 ## Files:
-Description.pdf: 
+milestone3_group24_description.pdf: 
 - A pdf containing description, schema alternation, list of query used in user interface and screenshots of demo.
 
 zoo.sql : 
